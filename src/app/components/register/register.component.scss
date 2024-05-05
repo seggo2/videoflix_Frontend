@@ -11,7 +11,7 @@ body {
 }
 
 .underLine {
-    border-top: 3px solid #29ABE2;
+    border-top: 3px solid red;
     width: 100px;
     margin-top: -30px;
     padding-bottom: 30px;
@@ -74,8 +74,8 @@ h1 {
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 50%;
-    height: 531px;
+    width: 700px;
+    height: 400px;
     padding: 32px 0px;
     border-radius: 30px;
     background-color: #ffff;
@@ -121,10 +121,18 @@ h1 {
     color: #ffff;
 }
 
+.logo {
+    width: 300px;
+    height: 150px;
+    border-radius: 50px;
+    z-index: 1;
+    background-color: rgb(185, 24, 24);
+    border: 2px solid white;
+}
+
 .logo img {
-    height: 78px;
-    width: 64px;
-    padding: 10px;
+    padding: 30px;
+    padding-bottom: 70px;
 }
 
 .linkPosition {
@@ -204,24 +212,3 @@ input {
     left: 40%;
 }
 
-@media(max-width:700px){
-    .mobileVision {
-        margin-left: 8px;
-        margin-right: 8px;
-    }
-    .position {
-        width: 100%;
-    }
-}
-
-@media(max-width:370px){
-    .name {   
-        width: 90%;
-    }
-    .mail {
-        width: 90%;
-    }
-    .hide {
-        width: 90%;
-    }
-}

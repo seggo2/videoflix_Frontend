@@ -1,6 +1,9 @@
+<div class="logo">
+    <div class="logoimg"><img src="/assets/9rrYlN-LogoMakr.png" alt=""></div>
+</div>
 <div class="mobileVision">
     <div class="position">
-        <h1>Log in</h1>
+        <h1 class="opensans">Videoflix</h1>
         <div class="underLine"></div>
         <form (submit)="login()" method="post" class="password-container"  return false>
             <input  type="text" name="username" [(ngModel)]="username" required class="mail"  placeholder="username" >
@@ -13,8 +16,8 @@
         </form>
     </div>
     <div (click)="register()" class="signUp">
-        <div class="signContainer"><b class="signText">Not a Join user?</b><button
-                class="signing">Sign up</button>
+        <div class="signContainer,opensans"><b class="opensans , signText">Not a Videoflix user?</b><button
+            class="signing ,opensans">Sign up</button>
         </div>
     </div>
   </div>
