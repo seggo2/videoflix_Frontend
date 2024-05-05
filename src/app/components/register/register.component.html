@@ -1,0 +1,17 @@
+<div class="logo">
+</div>
+<div class="mobileVision">
+
+    <div class="position">
+        <h1>Sign up</h1>
+        <div class="underLine"></div>
+        <form class="password-container" (submit)="register()" return false>
+            <input [(ngModel)]="username" required class="name" minlength="4" placeholder="Name" type="text" name="Name">
+            <input [(ngModel)]="email" required class="mail" minlength="7" placeholder="Email" type="email" name="mail">
+            <input [(ngModel)]="password" required class="hide" minlength="7" placeholder="Password"
+                type="password" name="password">
+            <button class="login">Sign up</button>
+        </form>
+    </div>
+</div>
+

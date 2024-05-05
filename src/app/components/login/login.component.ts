@@ -1,12 +1,33 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+  username: string = '';
+  password: string = '';
+  constructor(private as:AuthService, private router: Router) { }
 
+  ngOnInit(): void {
+  }
+  async login() {
+    try {
+      let resp:any = await this.as.loginWithUsernameAndPassword(this.username, this.password);
+      console.log(resp);
+      // this.router.navigateByUrl('/kanban');
+    } catch (e) {
+      alert('Login fehlgeschlagen!');
+      console.error(e);
+    }
+  }
+  register(){
+    this.router.navigateByUrl('/register');
+  }
 }
