@@ -6,7 +6,9 @@
     <main class="main">
     <div *ngFor="let imageData of imagesData">
       <div>
-        <img [src]="imageData.url" alt="{{ imageData.name }}" />
+        <p>{{imageData.title}}</p>
+        <img class="imageSize" [src]="imageData.imageUrl"/>
+        <p>{{imageData.description}}</p>
       </div>
     </div>
     </main>

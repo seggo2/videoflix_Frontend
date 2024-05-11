@@ -58,18 +58,23 @@ export class VideoflixComponent implements OnInit {
       const imagesData: any[] = [];
   
       for (const imageUrl of imageUrls) {
-        const imageName: any = imageUrl.split('/').pop();
+        const imageName: string = imageUrl.split('/').pop()!;
         const backendImageUrl = `http://localhost:8000/download-image/${imageName}/`;
         const response = await axios({
           method: 'GET',
           url: backendImageUrl,
-          responseType: 'blob',
+          responseType: 'json', 
         });
   
-        const blob = new Blob([response.data]);
-        const blobUrl = window.URL.createObjectURL(blob);
+        const imageData: any = response.data;
+        const blobUrl = `http://localhost:8000/media/videos/${imageName}`;
   
-        imagesData.push({ name: imageName, url: blobUrl });
+        imagesData.push({
+          title: imageData.title,
+          description: imageData.description,
+          imageUrl: blobUrl,
+          name:imageName
+        });
       }
   
       return imagesData;
