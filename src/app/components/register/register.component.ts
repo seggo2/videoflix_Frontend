@@ -33,7 +33,7 @@ export class RegisterComponent {
     this.http.post(url, body, { headers }).subscribe(
       response => {
         this.router.navigate(['/login']);
-        console.log('Antwort vom Server:', response);
+        alert('Please Check your email')
       },
       error => {
         console.error('Fehler beim POST-Request:', error);

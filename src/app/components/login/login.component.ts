@@ -21,9 +21,9 @@ export class LoginComponent {
     try {
       let resp:any = await this.as.loginWithUsernameAndPassword(this.username, this.password);
       console.log(resp);
-      // this.router.navigateByUrl('/kanban');
+      this.router.navigateByUrl('/videoflix');
     } catch (e) {
-      alert('Login fehlgeschlagen!');
+      alert('Confirm your mail adress');
       console.error(e);
     }
   }

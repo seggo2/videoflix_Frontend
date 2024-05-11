@@ -1,1 +1,16 @@
-<p>videoflix works!</p>
+<body>
+  <div class="container">
+    <header class="header">
+      <img src='/assets/9rrYlN-LogoMakr.png' alt="Netflix Logo">
+    </header>
+    <main class="main">
+    <div *ngFor="let imageData of imagesData">
+      <div>
+        <img [src]="imageData.url" alt="{{ imageData.name }}" />
+      </div>
+    </div>
+    </main>
+  </div>
+</body>
+
+
