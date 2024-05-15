@@ -8,6 +8,8 @@ import { saveAs } from 'file-saver';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
+
 
 @Component({
   selector: 'app-videoflix',
@@ -39,22 +41,8 @@ export class VideoflixComponent implements OnInit {
   }
 
   logout(): void {
-    debugger
-    const url = `http://localhost:8000/logout/`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'X-CSRFToken': this.getCookie('csrftoken'),
-    });
-  
-    this.http.post(url,  { headers }).subscribe(
-      response => {
-        this.router.navigate(['/login']);
-        alert('Please Check your email')
-      },
-      error => {
-        console.error('Fehler beim POST-Request:', error);
-      }
-    );
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 
   async manageAccount(): Promise<void> {
@@ -63,8 +51,8 @@ export class VideoflixComponent implements OnInit {
     const token = localStorage.getItem('token');
   
     if (!token) {
-      console.error('Token not found in localStorage');
-      throwError('Token not found');
+      this.router.navigate(['/login']);
+      console.error('Token not found');
       return;
     }
   
@@ -73,14 +61,13 @@ export class VideoflixComponent implements OnInit {
       'Content-Type': 'application/json'
     });
   
-    await lastValueFrom(this.http.get(url, { headers }))
-      .then(data => {
-        this.user = data as any;
-        console.log(this.user)
-      })
-      .catch(error => {
-        console.error('Error loading user details', error);
-      });
+    try {
+      const response = await this.http.get(url, { headers }).toPromise();
+      this.user = response as any;
+      console.log(this.user);
+    } catch (error) {
+      console.error('Error loading user details', error);
+    }
   }
 
   showPrivacyPolicy(): void {
@@ -107,7 +94,7 @@ export class VideoflixComponent implements OnInit {
     const url = 'http://localhost:8000/videoflix/';
     const token = localStorage.getItem('token');
     if (!token) {
-      console.error('Token not found in localStorage');
+      this.router.navigate(['/login']);
       return Promise.reject('Token not found');
     }
     const headers = {

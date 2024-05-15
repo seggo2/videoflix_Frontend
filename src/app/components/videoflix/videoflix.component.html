@@ -9,8 +9,8 @@
         <mat-icon>menu</mat-icon>
     </button>
         <div id="header_modal" class="visually-hidden" [class.visually-hidden]="!isModalVisible">
-          <a href="#" (click)="manageAccount()">Account</a>
-          <a href="#" (click)="showPrivacyPolicy()">Privacy Policy</a>
+          <a routerLink="/videoflix" (click)="manageAccount()">Account</a>
+          <a routerLink="/videoflix" (click)="showPrivacyPolicy()">Privacy Policy</a>
           <a href="#" (click)="logout()">Log out</a>
         </div>
     </header>

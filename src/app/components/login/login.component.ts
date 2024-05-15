@@ -19,11 +19,13 @@ export class LoginComponent {
   }
   async login() {
     try {
-      let resp:any = await this.as.loginWithUsernameAndPassword(this.username, this.password);
+      let resp: any = await this.as.loginWithUsernameAndPassword(this.username, this.password);
       console.log(resp);
+      // Token im Local Storage speichern
+      localStorage.setItem('token', resp.token);
       this.router.navigateByUrl('/videoflix');
     } catch (e) {
-      alert('Confirm your mail adress');
+      alert('Confirm your mail address');
       console.error(e);
     }
   }
