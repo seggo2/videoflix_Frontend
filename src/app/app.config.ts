@@ -6,6 +6,7 @@ import {
   provideHttpClient,
 } from '@angular/common/http';
 import { routes } from './app.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +18,6 @@ export const appConfig: ApplicationConfig = {
         cookieName: 'My-Xsrf-Cookie',
         headerName: 'My-Xsrf-Header',
       })
-    ),
+    ), provideAnimationsAsync(),
   ],
 };

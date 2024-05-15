@@ -5,19 +5,30 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import axios from 'axios';
 import { saveAs } from 'file-saver';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-videoflix',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,MatButtonModule,MatIconModule],
   templateUrl: './videoflix.component.html',
   styleUrl: './videoflix.component.scss'
 })
 export class VideoflixComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient ,private router: Router) {}
 
+  isModalVisible = false;
   error = '';
   videos:any
   imagesData:any
+  user:any = {
+    first_name: '',
+    last_name: '',
+    phone: '',
+    aadress:''
+  };
 
   async ngOnInit() {
     try {
@@ -27,6 +38,70 @@ export class VideoflixComponent implements OnInit {
     }
   }
 
+  logout(): void {
+    debugger
+    const url = `http://localhost:8000/logout/`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.getCookie('csrftoken'),
+    });
+  
+    this.http.post(url,  { headers }).subscribe(
+      response => {
+        this.router.navigate(['/login']);
+        alert('Please Check your email')
+      },
+      error => {
+        console.error('Fehler beim POST-Request:', error);
+      }
+    );
+  }
+
+  async manageAccount(): Promise<void> {
+    debugger
+    const url = 'http://localhost:8000/user/';
+    const token = localStorage.getItem('token');
+  
+    if (!token) {
+      console.error('Token not found in localStorage');
+      throwError('Token not found');
+      return;
+    }
+  
+    const headers = new HttpHeaders({
+      Authorization: `Token ${token}`,
+      'Content-Type': 'application/json'
+    });
+  
+    await lastValueFrom(this.http.get(url, { headers }))
+      .then(data => {
+        this.user = data as any;
+        console.log(this.user)
+      })
+      .catch(error => {
+        console.error('Error loading user details', error);
+      });
+  }
+
+  showPrivacyPolicy(): void {
+    this.router.navigate(['/privacy-policy']);
+  }
+
+  private getCookie(name: string): any | null {
+    const cookieValue = document.cookie
+      .split(';')
+      .map(cookie => cookie.trim())
+      .find(cookie => cookie.startsWith(name + '='));
+  
+    if (cookieValue) {
+      return cookieValue.split('=')[1];
+    }
+    return null;
+  }
+
+  toggleModal(): void {
+    this.isModalVisible = !this.isModalVisible;
+  }
 
   async loadVideos(): Promise<void> {
     const url = 'http://localhost:8000/videoflix/';
