@@ -16,7 +16,7 @@
     </header>
     <main  class="main">
     <div *ngFor="let imageData of imagesData">
-      <div class="thumbnail">
+      <div (click)="getVideo(imageData.name)" class="thumbnail">
         <p class="opensans">{{imageData.title}}</p>
         <img class="imageSize" [src]="imageData.imageUrl"/>
         <p class="opensans">{{imageData.description}}</p>
@@ -24,6 +24,22 @@
     </div>
     </main>
   </div>
+
+  <div class="video-overlay" *ngIf="videoUrl" (click)="closeVideo($event)">
+    <div class="position" (click)="stopPropagation($event)">
+      <video #videoPlayer controls autoplay [src]="videoUrl"></video>
+    </div>
+  
+    <div>
+      <button class="resolutionButtons" *ngFor="let resolution of resolutions" (click)="changeResolution(resolution, $event)">
+        {{ resolution }}
+      </button>
+    </div>
+  </div>
+  
+  
+  
+  
 </body>
 
 

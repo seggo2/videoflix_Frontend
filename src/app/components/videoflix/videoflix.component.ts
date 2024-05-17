@@ -1,36 +1,34 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit , ElementRef, ViewChild} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { lastValueFrom, throwError } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import axios from 'axios';
-import { saveAs } from 'file-saver';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { Injectable } from '@angular/core';
 
 
 @Component({
   selector: 'app-videoflix',
   standalone: true,
-  imports: [CommonModule,FormsModule,MatButtonModule,MatIconModule],
+  imports: [CommonModule,FormsModule,MatButtonModule,MatIconModule,],
   templateUrl: './videoflix.component.html',
   styleUrl: './videoflix.component.scss'
 })
 export class VideoflixComponent implements OnInit {
-  constructor(private http: HttpClient ,private router: Router) {}
+  constructor(private http: HttpClient ,private router: Router,private elementRef: ElementRef ) {}
 
   isModalVisible = false;
+  name='';
   error = '';
   videos:any
   imagesData:any
-  user:any = {
-    first_name: '',
-    last_name: '',
-    phone: '',
-    aadress:''
-  };
+  
+  resolutions = ['1080p', '720p', '480p'];
+  selectedResolution = '1080p';
+  videoUrl: any;
+  isFullscreen = false;
+  videoUrls:any
 
   async ngOnInit() {
     try {
@@ -40,34 +38,15 @@ export class VideoflixComponent implements OnInit {
     }
   }
 
+
+
   logout(): void {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
 
   async manageAccount(): Promise<void> {
-    debugger
-    const url = 'http://localhost:8000/user/';
-    const token = localStorage.getItem('token');
-  
-    if (!token) {
-      this.router.navigate(['/login']);
-      console.error('Token not found');
-      return;
-    }
-  
-    const headers = new HttpHeaders({
-      Authorization: `Token ${token}`,
-      'Content-Type': 'application/json'
-    });
-  
-    try {
-      const response = await this.http.get(url, { headers }).toPromise();
-      this.user = response as any;
-      console.log(this.user);
-    } catch (error) {
-      console.error('Error loading user details', error);
-    }
+    this.router.navigate(['/accountDetails']);
   }
 
   showPrivacyPolicy(): void {
@@ -144,5 +123,44 @@ export class VideoflixComponent implements OnInit {
       console.error('Error downloading images:', error);
       return [];
     }
+  }
+
+
+
+  async getVideo(name: string) {
+    const url = `http://localhost:8000/videos/${name}/`;
+    try {
+      const response: any = await this.http.get(url).toPromise();
+      console.log('Video response:', response);
+      this.videoUrls = response;
+      this.setVideoUrl();
+    } catch (error) {
+      console.error('Error fetching video:', error);
+    }
+  }
+
+  setVideoUrl() {
+    this.videoUrl = this.videoUrls[this.selectedResolution];
+  }
+
+  changeResolution(resolution: string ,event: MouseEvent) {
+    if (this.selectedResolution !== resolution) {
+      this.selectedResolution = resolution;
+      this.setVideoUrl();
+    }
+  }
+
+  async playVideo(name: string) {
+    await this.getVideo(name);
+  }
+
+  closeVideo(event: MouseEvent) {
+    if (event.target === event.currentTarget) {
+      this.videoUrl = null; 
+    }
+  }
+  
+  stopPropagation(event: MouseEvent) {
+    event.stopPropagation();
   }
 }

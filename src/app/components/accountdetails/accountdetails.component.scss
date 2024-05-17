@@ -1,0 +1,70 @@
+#header_modal {
+    margin: 0;
+    position: fixed;
+    top: 103px;
+    right: 16px !important;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 20px 0px 20px 20px;
+    background: var(--Version-2-main-color, #2A3647);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
+    cursor: pointer;
+}
+.visually-hidden {
+    display: none !important;
+  }
+#header_modal a {
+  color: white;
+  padding: 8px 16px;
+
+}
+.input{
+    background-color: rgb(67, 66, 66);
+    border-radius: 5px;
+    color: white;
+}
+
+mat-icon-button{
+    height: 100px;
+}
+.header {
+  border-bottom: 2px solid black;
+  margin: 0px;
+  background-color: rgb(67, 66, 66);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.height{
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-details {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgb(167, 167, 167);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+ 
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+  }
+}

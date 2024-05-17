@@ -2,6 +2,49 @@ body {
   margin: 0px;
   background-color: rgb(213, 213, 213);
 }
+
+
+
+
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black; /* Halbtransparenter Hintergrund */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.position {
+  position: relative;
+}
+
+video {
+  max-width: 90%; /* Maximale Breite des Videos */
+  max-height: 90vh; /* Maximale Höhe des Videos */
+}
+.resolutionButtons{
+  margin: 10px;
+  height: 35px;
+  width: 70px;
+  border-radius: 10px ;
+  background-color: white;
+  cursor: pointer;
+  &:hover{
+    border: 2px solid red;
+  }
+}
+
+
+
+
+
+
+
 .container {
   width: 100%;
   height: 100vh;
