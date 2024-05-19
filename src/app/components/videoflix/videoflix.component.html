@@ -3,7 +3,7 @@
     <header class="header">
       <img  class="logo" src='/assets/9rrYlN-LogoMakr.png' alt="Netflix Logo">
       <div>
-        <input placeholder="search" class="input" type="text">
+        <input placeholder="search" class="input" type="text" [(ngModel)]="searchTerm" (input)="filterImages(searchTerm)">
       </div>
       <button mat-icon-button color="accent" (click)="toggleModal()">
         <mat-icon>menu</mat-icon>
@@ -14,15 +14,16 @@
           <a href="#" (click)="logout()">Log out</a>
         </div>
     </header>
-    <main  class="main">
-    <div *ngFor="let imageData of imagesData">
-      <div (click)="getVideo(imageData.name)" class="thumbnail">
-        <p class="opensans">{{imageData.title}}</p>
-        <img class="imageSize" [src]="imageData.imageUrl"/>
-        <p class="opensans">{{imageData.description}}</p>
+    <main class="main">
+      <div *ngFor="let imageData of filteredImagesData">
+        <div (click)="getVideo(imageData.name)" class="thumbnail">
+          <p class="opensans">{{imageData.title}}</p>
+          <img class="imageSize" [src]="imageData.imageUrl"/>
+          <p class="opensans">{{imageData.description}}</p>
+        </div>
       </div>
-    </div>
     </main>
+    
   </div>
 
   <div class="video-overlay" *ngIf="videoUrl" (click)="closeVideo($event)">

@@ -21,11 +21,10 @@ export class LoginComponent {
     try {
       let resp: any = await this.as.loginWithUsernameAndPassword(this.username, this.password);
       console.log(resp);
-      // Token im Local Storage speichern
       localStorage.setItem('token', resp.token);
       this.router.navigateByUrl('/videoflix');
     } catch (e) {
-      alert('Confirm your mail address');
+      alert('Confirm your mail address(please check the junkMails!), or wrong password');
       console.error(e);
     }
   }

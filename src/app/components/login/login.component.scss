@@ -130,7 +130,7 @@ h1 {
     font-size: 16px;
     font-weight: 700;
     color: #ffff;
-    margin-right: 38px;
+   
 }
 
 
@@ -190,6 +190,9 @@ button {
 }
 
 .buttonPosition {
+   align-items: center;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
 }
 

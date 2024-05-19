@@ -11,6 +11,17 @@
             <input [(ngModel)]="email" required class="mail" minlength="7" placeholder="Email" type="email" name="mail">
             <input [(ngModel)]="password" required class="hide" minlength="7" placeholder="Password"
                 type="password" name="password">
+                <div class="additionalOptions">
+                    <label class="privacyCheckbox">
+                        <input
+                          type="checkbox"
+                          name="privacyAccepted"
+                          id="privacyAccepted"
+                          [(ngModel)]="privacyAccepted"
+                        />
+                        Ich akzeptiere die <a href="privacy-policy">Datenschutzrichtlinie</a>.
+                      </label>
+                  </div>
             <button class="login , opensans">Sign up</button>
         </form>
     </div>

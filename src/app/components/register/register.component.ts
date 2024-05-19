@@ -17,29 +17,36 @@ export class RegisterComponent {
   username: string = '';
   email: string = '';
   password: string = '';
+  privacyAccepted = false;
 
   register() {
-    const url = `http://localhost:8000/register/`;
-    const body = {
-      username: this.username,
-      password: this.password,
-      email: this.email,
-    };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'X-CSRFToken': this.getCookie('csrftoken'),
-    });
+    if (this.privacyAccepted) {
+      const url = `http://localhost:8000/register/`;
+      const body = {
+        username: this.username,
+        password: this.password,
+        email: this.email,
+      };
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+      });
   
-    this.http.post(url, body, { headers }).subscribe(
-      response => {
-        this.router.navigate(['/login']);
-        alert('Please Check your email')
-      },
-      error => {
-        console.error('Fehler beim POST-Request:', error);
-      }
-    );
+      this.http.post(url, body, { headers }).subscribe(
+        response => {
+          this.router.navigate(['/login']);
+          alert('Please check your email');
+        },
+        error => {
+          console.error('Fehler beim POST-Request:', error);
+          const errorMessage = error.error && error.error.message ? error.error.message : 'email already exists';
+          alert(`Error: ${errorMessage}`);
+        }
+      );
+    } else {
+      alert('Bitte akzeptieren Sie die Datenschutzrichtlinie, um sich zu registrieren.');
+    }
   }
+  
 
   private getCookie(name: string): any | null {
     const cookieValue = document.cookie
