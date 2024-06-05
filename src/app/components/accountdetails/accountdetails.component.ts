@@ -47,7 +47,7 @@ export class AccountdetailsComponent implements OnInit{
   }
 
   async manageAccount(): Promise<void> {
-    const url = 'http://localhost:8000/user/';
+    const url = 'https://sefa-gur.developerakademie.org/user/';
     const token = localStorage.getItem('token');
   
     if (!token) {
@@ -71,7 +71,7 @@ export class AccountdetailsComponent implements OnInit{
   }
 
   async updateUser(): Promise<void> {
-    const url = 'http://localhost:8000/user/';
+    const url = 'https://sefa-gur.developerakademie.org/user/';
     const token = localStorage.getItem('token');
   
     if (!token) {

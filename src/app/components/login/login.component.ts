@@ -13,6 +13,7 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
   username: string = '';
   password: string = '';
+  errorMessage: string='';
   constructor(private as:AuthService, private router: Router) { }
 
   ngOnInit(): void {
@@ -23,11 +24,16 @@ export class LoginComponent {
       console.log(resp);
       localStorage.setItem('token', resp.token);
       this.router.navigateByUrl('/videoflix');
-    } catch (e) {
-      alert('Confirm your mail address(please check the junkMails!), or wrong password');
+    } catch (e: any) {
+       this.errorMessage = 'An error occurred during login.';
+      if (e.error.detail) {
+       this.errorMessage = e.error.detail
+      }
       console.error(e);
     }
   }
+  
+  
   register(){
     this.router.navigateByUrl('/register');
   }

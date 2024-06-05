@@ -139,6 +139,7 @@ h1 {
     width: 300px;
     height: 150px;
     border-radius: 50px;
+    margin: 20px;
     z-index: 1;
     background-color: rgb(185, 24, 24);
     border: 2px solid white;
@@ -205,11 +206,8 @@ input {
 }
 
 .message {
-    position: absolute;
-    top: 265px;
     font-size: 13px;
     color: red;
     font-weight: bold;
-
 }
 

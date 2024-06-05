@@ -10,7 +10,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   public loginWithUsernameAndPassword(username:string, password:string){
-    const url = 'http://localhost:8000/login/';
+    const url = 'https://sefa-gur.developerakademie.org/login/';
     const body = {
       "username": username,
       "password": password

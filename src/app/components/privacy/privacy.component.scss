@@ -1,15 +1,16 @@
-body {
+.container {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    overflow: hidden;
   }
   .back{
     height: 50px;
     width: 70px;
     border-radius: 10px;
-    background-color: orange;
+    background-color: white;
     cursor: pointer;
-    border: 2px solid white;
+    border: 2px solid black;
   }
   header {
     background-color: #333;
@@ -37,7 +38,10 @@ body {
   footer {
     background-color: #333;
     color: #fff;
-    padding: 10px;
     text-align: center;
+    position: absolute;
+    height: 50px;
+    bottom: 0px;
+    width: 100%;
   }
   

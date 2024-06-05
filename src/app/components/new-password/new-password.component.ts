@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-new-password',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './new-password.component.html',
   styleUrl: './new-password.component.scss'
 })
@@ -15,11 +16,11 @@ export class NewPasswordComponent {
   constructor(private as:AuthService, private router: Router,private http: HttpClient) { }
   
   email="";
-
-
+  errorMessage="";
+  passwordResetSuccess:any
 
   emailSubmit() {
-    const url = 'http://localhost:8000/password-reset/';
+    const url = 'https://sefa-gur.developerakademie.org/password-reset/';
     const body = { email: this.email };
 
     const headers = new HttpHeaders({
@@ -29,12 +30,15 @@ export class NewPasswordComponent {
     this.http.post(url, body, { headers }).subscribe(
       response => {
         console.log('Password reset email sent:', response);
-        alert('Password reset email sent. Please check your email.');
+        this.passwordResetSuccess = true; 
+        this.errorMessage = ''; 
       },
       error => {
         console.error('Error during password reset request:', error);
-        alert('Error during password reset request.');
+        this.errorMessage = 'Error during password reset request.';
+        this.passwordResetSuccess = false; 
       }
     );
   }
+  
 }

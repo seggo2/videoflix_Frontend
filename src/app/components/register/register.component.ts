@@ -18,10 +18,14 @@ export class RegisterComponent {
   email: string = '';
   password: string = '';
   privacyAccepted = false;
-
+  privacyError:any
+  errorMessage="";
+  showPopup:any
+  
   register() {
     if (this.privacyAccepted) {
-      const url = `http://localhost:8000/register/`;
+      this.privacyError = false;
+      const url = `https://sefa-gur.developerakademie.org/register/`;
       const body = {
         username: this.username,
         password: this.password,
@@ -33,19 +37,25 @@ export class RegisterComponent {
   
       this.http.post(url, body, { headers }).subscribe(
         response => {
-          this.router.navigate(['/login']);
-          alert('Please check your email');
+          this.showPopup = true; // Popup anzeigen
+          this.errorMessage = '';
+          this.privacyError = false;
         },
         error => {
           console.error('Fehler beim POST-Request:', error);
-          const errorMessage = error.error && error.error.message ? error.error.message : 'email already exists';
-          alert(`Error: ${errorMessage}`);
+          this.errorMessage = error.error && error.error.message ? error.error.message : 'Email already exists';
         }
       );
     } else {
-      alert('Bitte akzeptieren Sie die Datenschutzrichtlinie, um sich zu registrieren.');
+      this.privacyError = true;
     }
   }
+  
+  closePopup() {
+    this.showPopup = false; // Popup ausblenden
+    this.router.navigate(['/login']); // Weiterleitung zum Login
+  }
+  
   
 
   private getCookie(name: string): any | null {

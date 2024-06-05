@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-reset-password-component',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './reset-password-component.component.html',
   styleUrl: './reset-password-component.component.scss'
 })
@@ -19,27 +20,35 @@ export class ResetPasswordComponentComponent {
   passwordConfirm="";
   uid: string = '';
   token: string = '';
+  passwordResetSuccess:any
+  errorMessage:string="";
+
+
+
 
   resetPassword() {
     if (this.password !== this.passwordConfirm) {
-      alert('Passwords do not match!');
+      this.errorMessage = 'Passwords do not match!';
       return;
     }
-
-    const url = 'http://localhost:8000/api/reset-password/';
+  
+    const url = 'https://sefa-gur.developerakademie.org/api/reset-password/';
     const body = {
       uid: this.uid,
       token: this.token,
       new_password: this.password
     };
-
+  
     this.http.post(url, body).subscribe(response => {
       console.log('Password has been reset', response);
-      alert('Password has been reset successfully.');
-      this.router.navigate(['/login']);  
+      this.passwordResetSuccess = true; 
+      this.errorMessage = ''; 
+      this.router.navigate(['/login']); // Weiterleitung an das Login, wenn das Passwort erfolgreich zurückgesetzt wurde
     }, error => {
       console.error('Error resetting password', error);
-      alert('Error resetting password.');
+      this.errorMessage = 'Error resetting password.'; 
+      this.passwordResetSuccess = false; 
     });
   }
+  
 }

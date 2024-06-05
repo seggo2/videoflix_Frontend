@@ -30,8 +30,8 @@
         placeholder="Password"
         type="password"
       />
-      <div class="d-none message" id="message">
-        ups Passwort or email are not correct Try again
+      <div class="message" id="message" [class.d-none]="!errorMessage">
+        {{ errorMessage }}
       </div>
       <div class="buttonPosition">
         <div>
@@ -48,3 +48,4 @@
     </div>
   </div>
 </div>
+

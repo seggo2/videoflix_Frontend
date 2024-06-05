@@ -61,64 +61,56 @@ export class VideoflixComponent implements OnInit {
     this.isModalVisible = !this.isModalVisible;
   }
 
-  async loadVideos(): Promise<void> {
-    const url = 'http://localhost:8000/videoflix/';
+  async loadVideos() {
+    const url = 'https://sefa-gur.developerakademie.org/videoflix/';
     const token = localStorage.getItem('token');
     if (!token) {
-      this.router.navigate(['/login']);
-      return Promise.reject('Token not found');
+        this.router.navigate(['/login']);
+        return Promise.reject('Token not found');
     }
     const headers = {
-      Authorization: `Token ${token}`,
-      'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json',
     };
     try {
-      const response = await axios.get<string[]>(url, { headers });
-      const imageUrls: string[] = response.data;
-      if (imageUrls.length === 0) {
-        console.log('No images found.');
-        return;
-      }
-      this.imagesData = await this.downloadImages(imageUrls);
-      console.log('Images loaded successfully:', this.imagesData);
+        const response = await axios.get(url, { headers });
+        const imageUrls = response.data;
+        if (imageUrls.length === 0) {
+            console.log('No images found.');
+            return;
+        }
+        this.imagesData = await this.downloadImages(imageUrls);
+        console.log('Images loaded successfully:', this.imagesData);
     } catch (error) {
-      console.error('Error loading videos:', error);
+        console.error('Error loading videos:', error);
     }
-  }
+}
 
-  async downloadImages(imageUrls: string[]): Promise<any[]> {
+async downloadImages(imageUrls:string) {
     try {
-      const imagesData: any[] = [];
-
-      for (const imageUrl of imageUrls) {
-        const imageName: string = imageUrl.split('/').pop()!;
-        const backendImageUrl = `http://localhost:8000/download-image/${imageName}/`;
-        const response = await axios({
-          method: 'GET',
-          url: backendImageUrl,
-          responseType: 'json',
-        });
-
-        const imageData: any = response.data;
-        const blobUrl = `http://localhost:8000/media/videos/${imageName}`;
-
-        imagesData.push({
-          title: imageData.title,
-          description: imageData.description,
-          imageUrl: blobUrl,
-          name: imageName,
-        });
-      }
-
-      return imagesData;
+        const imagesData = [];
+        for (const imageUrl of imageUrls) {
+            const imageName = imageUrl.split('/').pop();
+            const backendImageUrl = `https://sefa-gur.developerakademie.org/download-image/${imageName}/`;
+            const response = await axios.get(backendImageUrl, { responseType: 'json' });
+            const imageData = response.data;
+            imagesData.push({
+                title: imageData.title,
+                description: imageData.description,
+                imageUrl: imageData.image_url,
+                name: imageName,
+            });
+        }
+        return imagesData;
     } catch (error) {
-      console.error('Error downloading images:', error);
-      return [];
+        console.error('Error downloading images:', error);
+        return [];
     }
-  }
+}
+
 
   async getVideo(name: string) {
-    const url = `http://localhost:8000/videos/${name}/`;
+    const url = `https://sefa-gur.developerakademie.org/videos/${name}/`;
     try {
       const response: any = await this.http.get(url).toPromise();
       console.log('Video response:', response);
