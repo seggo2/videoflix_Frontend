@@ -1,46 +1,56 @@
 <body>
   <div class="container">
     <header class="header">
-      <img  class="logo" src='/assets/9rrYlN-LogoMakr.png' alt="Netflix Logo">
+      <img class="logo" src="/assets/9rrYlN-LogoMakr.png" alt="Netflix Logo" />
       <div>
-        <input placeholder="search" class="input" type="text" [(ngModel)]="searchTerm" (input)="filterImages(searchTerm)">
+        <input
+          placeholder="search"
+          class="input"
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="filterImages(searchTerm)"
+        />
       </div>
       <button mat-icon-button color="accent" (click)="toggleModal()">
         <mat-icon>menu</mat-icon>
-    </button>
-        <div id="header_modal" class="visually-hidden" [class.visually-hidden]="!isModalVisible">
-          <a routerLink="/videoflix" (click)="manageAccount()">Account</a>
-          <a routerLink="/videoflix" (click)="showPrivacyPolicy()">Privacy Policy</a>
-          <a href="#" (click)="logout()">Log out</a>
-        </div>
-    </header>
-    <main class="main">
+      </button>
+      <div
+      id="header_modal"
+      class="visually-hidden"
+      [class.visually-hidden]="!isModalVisible"
+      >
+      <a routerLink="/videoflix" (click)="manageAccount()">Account</a>
+      <a routerLink="/videoflix" (click)="showPrivacyPolicy()"
+      >Privacy Policy</a
+      >
+      <a href="#" (click)="logout()">Log out</a>
+    </div>
+  </header>
+  <h2>Short Movies</h2>
+  <main class="main">
       <div *ngFor="let imageData of filteredImagesData">
         <div (click)="getVideo(imageData.name)" class="thumbnail">
-          <p class="opensans">{{imageData.title}}</p>
-          <img class="imageSize" [src]="imageData.imageUrl"/>
-          <p class="opensans">{{imageData.description}}</p>
+          <p class="opensans">{{ imageData.title }}</p>
+          <img class="imageSize" [src]="imageData.imageUrl" />
+          <p class="opensans">{{ imageData.description }}</p>
         </div>
       </div>
     </main>
-    
   </div>
 
   <div class="video-overlay" *ngIf="videoUrl" (click)="closeVideo($event)">
     <div class="position" (click)="stopPropagation($event)">
       <video #videoPlayer controls autoplay [src]="videoUrl"></video>
     </div>
-  
+
     <div>
-      <button class="resolutionButtons" *ngFor="let resolution of resolutions" (click)="changeResolution(resolution, $event)">
+      <button
+        class="resolutionButtons"
+        *ngFor="let resolution of resolutions"
+        (click)="changeResolution(resolution, $event)"
+      >
         {{ resolution }}
       </button>
     </div>
   </div>
-  
-  
-  
-  
 </body>
-
-
