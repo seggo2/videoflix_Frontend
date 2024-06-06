@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2, ElementRef ,OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -10,14 +10,20 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
   errorMessage: string='';
-  constructor(private as:AuthService, private router: Router) { }
+  constructor(private as:AuthService, private router: Router,private renderer: Renderer2, private el: ElementRef) { }
 
   ngOnInit(): void {
+    const backgroundImageUrl = 'assets/thumbnail/movie.jpg';
+    const element = this.el.nativeElement.querySelector('.mobileVision');
+    if (element) {
+      this.renderer.setStyle(element, 'background-image', `url(${backgroundImageUrl})`);
+    }
   }
+  
   async login() {
     try {
       let resp: any = await this.as.loginWithUsernameAndPassword(this.username, this.password);

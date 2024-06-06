@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2, ElementRef,OnInit  } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -11,8 +11,16 @@ import { CommonModule } from '@angular/common';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
-export class RegisterComponent {
-  constructor(private http: HttpClient, private router: Router) {}
+export class RegisterComponent implements OnInit {
+  constructor(private http: HttpClient, private router: Router,private renderer: Renderer2, private el: ElementRef) {}
+
+  ngOnInit(): void {
+    const backgroundImageUrl = 'assets/thumbnail/movie.jpg';
+    const element = this.el.nativeElement.querySelector('.mobileVision');
+    if (element) {
+      this.renderer.setStyle(element, 'background-image', `url(${backgroundImageUrl})`);
+    }
+  }
 
   username: string = '';
   email: string = '';
