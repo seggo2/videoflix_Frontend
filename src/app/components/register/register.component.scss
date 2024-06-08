@@ -110,7 +110,16 @@ h1 {
   padding-top: 8px;
   padding-bottom: 8px;
 }
-
+.backgroundblur{
+  backdrop-filter: blur(4px);
+  margin-bottom: 10px;
+  width: 200px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+}
 .remember-text {
   font-weight: 400;
   color: #a8a8a8;
@@ -121,7 +130,6 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
   width: 180px;
   height: 43px;
   border-radius: 8px;
@@ -131,6 +139,8 @@ h1 {
   font-weight: 500;
   color: #ffff;
   text-decoration: none;
+  cursor: pointer;
+  
 }
 
 .popup {

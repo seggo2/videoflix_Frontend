@@ -38,7 +38,10 @@ export class LoginComponent implements OnInit {
       console.error(e);
     }
   }
-  
+
+  newPassword(){
+    this.router.navigateByUrl('/new-password');
+  }
   
   register(){
     this.router.navigateByUrl('/register');

@@ -64,7 +64,9 @@ export class RegisterComponent implements OnInit {
     this.router.navigate(['/login']); // Weiterleitung zum Login
   }
   
-  
+  loginSite(){
+    this.router.navigateByUrl('/login');
+  }
 
   private getCookie(name: string): any | null {
     const cookieValue = document.cookie
