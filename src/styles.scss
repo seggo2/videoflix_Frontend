@@ -1,0 +1,22 @@
+
+body{
+    margin: 0px;
+    background-color: black;
+    
+}
+
+
+.opensans{
+    font-family: 'Open Sans';
+}
+
+/* open-sans-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../src/assets/fonts/OpenSans_Condensed-Medium.ttf') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

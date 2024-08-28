@@ -1,0 +1,51 @@
+<div class="logo">
+  <div class="logoimg"><img src="assets/9rrYlN-LogoMakr.png" alt="" /></div>
+</div>
+<div class="mobileVision">
+  <div class="position">
+    <h1 class="opensans">Videoflix</h1>
+    <div class="underLine"></div>
+    <form
+      (submit)="login()"
+      method="post"
+      class="password-container"
+      return
+      false
+    >
+      <input
+        type="text"
+        name="username"
+        [(ngModel)]="username"
+        required
+        class="mail"
+        placeholder="username"
+      />
+      <input
+        required
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        class="hide"
+        minlength="7"
+        placeholder="Password"
+        type="password"
+      />
+      <div class="message" id="message" [class.d-none]="!errorMessage">
+        {{ errorMessage }}
+      </div>
+      <div class="buttonPosition">
+        <div>
+          <a (click)="newPassword()" class="forgotPassword">Passwort vergessen?</a>
+        </div>
+        <button type="submit" class="login">Log in</button>
+      </div>
+    </form>
+  </div>
+  <div (click)="register()" class="signUp">
+    <div class="signContainer , opensans">
+      <b class="opensans , signText">Not a Videoflix user?</b
+      ><button class="signing ,opensans">Sign up</button>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,46 @@
+<div class="logo">
+    <div class="logoimg"><img src="assets/9rrYlN-LogoMakr.png" alt=""></div>
+</div>
+<div class="mobileVision">
+    <div class="backgroundblur">
+        <a class="login" (click)="loginSite()">Login</a>
+
+    </div>
+
+    <div class="position">
+        <h1 class="opensans">Sign up</h1>
+        <div class="underLine"></div>
+        <form class="password-container" (submit)="register()" return false>
+            <input [(ngModel)]="username" required class="name" minlength="4" placeholder="Name" type="text" name="Name">
+            <input [(ngModel)]="email" required class="mail" minlength="7" placeholder="Email" type="email" name="mail">
+            <input [(ngModel)]="password" required class="hide" minlength="7" placeholder="Password"
+                type="password" name="password">
+
+            <div class="error_container">
+                <div *ngIf="errorMessage" class="message">{{ errorMessage }}</div>
+                <div *ngIf="privacyError" class="message">Bitte akzeptieren Sie die Datenschutzrichtlinie, um sich zu registrieren.</div>
+            </div>
+            <div class="additionalOptions">
+                <label class="privacyCheckbox">
+                    <input
+                      type="checkbox"
+                      name="privacyAccepted"
+                      id="privacyAccepted"
+                      [(ngModel)]="privacyAccepted"
+                    />
+                    Ich akzeptiere die <a href="privacy-policy">Datenschutzrichtlinie</a>.
+                </label>
+            </div>
+            <button class="login , opensans">Sign up</button>
+
+        </form>
+    </div>
+</div>
+<div class="popup" *ngIf="showPopup">
+    <div class="popup-content">
+      <h2>Email versendet</h2>
+      <p>Bitte überprüfen Sie Ihre E-Mail, einschließlich des Junk-E-Mail-Ordners.</p>
+      <button class="buttonConfirm" (click)="closePopup()">OK</button>
+    </div>
+  </div>
+  
