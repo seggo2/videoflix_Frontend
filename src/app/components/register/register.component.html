@@ -1,46 +1,55 @@
-<div class="logo">
-    <div class="logoimg"><img src="assets/9rrYlN-LogoMakr.png" alt=""></div>
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+    <img src="assets/thumbnail/register.webp" alt="Cinematic Background"
+    class="w-100 h-100 object-fit-cover position-absolute top-0 start-0 z-n1" />
+
+    <button
+    class="btn btn-outline-light position-absolute top-0 end-0 m-4"
+    (click)="loginSite()"
+  >
+   Zurück Login
+  </button>
+
+    <form class="p-4 border text-white rounded w-100 bg-dark bg-opacity-75" style="max-width: 500px;" (submit)="register()">
+      
+      <div *ngIf="step === 1">
+        <h2 class="text-center mb-4">Registrieren</h2>
+        <div class="form-group mb-3">
+          <input class="form-control" placeholder="Name" [(ngModel)]="username" name="username" required />
+        </div>
+        <div class="form-group mb-3">
+          <input class="form-control" placeholder="E-Mail" type="email" [(ngModel)]="email" name="email" required />
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+        <button type="button" class="btn btn-secondary w-100" (click)="next()">Weiter</button>
+      </div>
+  
+      <div *ngIf="step === 2">
+        <h2 class="text-center mb-4">Registrieren</h2>
+        <div class="form-group mb-3">
+          <input class="form-control" placeholder="Passwort" type="password" [(ngModel)]="password" name="password" required minlength="7" />
+          <div *ngIf="errorMessage" class="alert alert-danger  mt-1">{{errorMessage}}</div>
+        </div>
+        <div class="form-check mb-3">
+          <input type="checkbox" class="form-check-input" id="privacyCheck" [(ngModel)]="privacyAccepted" name="privacyAccepted" />
+          <label class="form-check-label" for="privacyCheck">Ich akzeptiere die Datenschutzrichtlinie</label>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" (click)="back()">Zurück</button>
+          <button type="button" class="btn btn-primary" (click)="next()">Weiter</button>
+        </div>
+      </div>
+  
+ <!-- ✅ Nur bei Erfolg anzeigen -->
+<div *ngIf="registrationSuccess" class="text-center">
+  <h2>🎉 Registrierung erfolgreich!</h2>
+  <p>Bitte überprüfe deine E-Mail.</p>
 </div>
-<div class="mobileVision">
-    <div class="backgroundblur">
-        <a class="login" (click)="loginSite()">Login</a>
 
-    </div>
-
-    <div class="position">
-        <h1 class="opensans">Sign up</h1>
-        <div class="underLine"></div>
-        <form class="password-container" (submit)="register()" return false>
-            <input [(ngModel)]="username" required class="name" minlength="4" placeholder="Name" type="text" name="Name">
-            <input [(ngModel)]="email" required class="mail" minlength="7" placeholder="Email" type="email" name="mail">
-            <input [(ngModel)]="password" required class="hide" minlength="7" placeholder="Password"
-                type="password" name="password">
-
-            <div class="error_container">
-                <div *ngIf="errorMessage" class="message">{{ errorMessage }}</div>
-                <div *ngIf="privacyError" class="message">Bitte akzeptieren Sie die Datenschutzrichtlinie, um sich zu registrieren.</div>
-            </div>
-            <div class="additionalOptions">
-                <label class="privacyCheckbox">
-                    <input
-                      type="checkbox"
-                      name="privacyAccepted"
-                      id="privacyAccepted"
-                      [(ngModel)]="privacyAccepted"
-                    />
-                    Ich akzeptiere die <a href="privacy-policy">Datenschutzrichtlinie</a>.
-                </label>
-            </div>
-            <button class="login , opensans">Sign up</button>
-
-        </form>
-    </div>
+<!-- ❌ Nur bei Fehler anzeigen -->
+<div *ngIf="!registrationSuccess && errorMessage" class="alert alert-danger text-center">
+  {{ errorMessage }}
 </div>
-<div class="popup" *ngIf="showPopup">
-    <div class="popup-content">
-      <h2>Email versendet</h2>
-      <p>Bitte überprüfen Sie Ihre E-Mail, einschließlich des Junk-E-Mail-Ordners.</p>
-      <button class="buttonConfirm" (click)="closePopup()">OK</button>
-    </div>
+  
+    </form>
   </div>
   

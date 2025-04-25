@@ -1,51 +1,52 @@
-<div class="logo">
-  <div class="logoimg"><img src="assets/9rrYlN-LogoMakr.png" alt="" /></div>
-</div>
-<div class="mobileVision">
-  <div class="position">
-    <h1 class="opensans">Videoflix</h1>
-    <div class="underLine"></div>
-    <form
-      (submit)="login()"
-      method="post"
-      class="password-container"
-      return
-      false
-    >
+<div class="d-flex justify-content-center align-items-center vh-100 position-relative">
+  <button
+  class="btn btn-outline-light position-absolute top-0 end-0 m-4"
+  (click)="guestLogin()"
+>
+  Als Gast fortfahren
+</button>
+
+  <img src="assets/thumbnail/cinema.webp" alt="Cinematic Background"
+       class="w-100 h-100 object-fit-cover position-absolute top-0 start-0 z-n1" />
+
+  <form (submit)="login()" class="container p-4 border rounded text-white bg-dark bg-opacity-75 w-50 position-relative">
+    <h1 class="text-center mb-4">Videoflix Login</h1>
+
+    <div class="form-group mb-3">
       <input
         type="text"
         name="username"
         [(ngModel)]="username"
         required
-        class="mail"
-        placeholder="username"
+        class="form-control"
+        placeholder="Username"
       />
+    </div>
+
+    <div class="form-group mb-3">
       <input
-        required
         type="password"
         name="password"
         [(ngModel)]="password"
-        class="hide"
+        class="form-control"
         minlength="7"
-        placeholder="Password"
-        type="password"
+        required
+        placeholder="Passwort"
       />
-      <div class="message" id="message" [class.d-none]="!errorMessage">
-        {{ errorMessage }}
-      </div>
-      <div class="buttonPosition">
-        <div>
-          <a (click)="newPassword()" class="forgotPassword">Passwort vergessen?</a>
-        </div>
-        <button type="submit" class="login">Log in</button>
-      </div>
-    </form>
-  </div>
-  <div (click)="register()" class="signUp">
-    <div class="signContainer,opensans">
-      <b class="opensans , signText">Not a Videoflix user?</b
-      ><button class="signing ,opensans">Sign up</button>
     </div>
-  </div>
-</div>
 
+    <div *ngIf="errorMessage" class="alert alert-danger text-center">
+      {{ errorMessage }}
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+      <button style="min-width:50%" type="submit" class="btn btn-danger  mb-3">Einloggen</button>
+      <div class="text-center text-light mb-3 fs-5">ODER</div>
+      <button style="min-width:50%" type="button" class="btn btn-secondary" (click)="register()">Registrieren</button>
+    </div>
+
+    <div class="mt-3 text-center">
+      <a  role="button" (click)="newPassword()" class="text-light text-decoration-underline">Passwort vergessen?</a>
+    </div>
+  </form>
+</div>

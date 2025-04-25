@@ -6,12 +6,14 @@ import axios from 'axios';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
- 
+import { environment } from '../../../enviroments/environment';
+import { SidebarComponent } from "../../sidebar/sidebar.component";
+
 
 @Component({
   selector: 'app-videoflix',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule, SidebarComponent],
   templateUrl: './videoflix.component.html',
   styleUrl: './videoflix.component.scss',
 })
@@ -44,25 +46,14 @@ export class VideoflixComponent implements OnInit {
     }
   }
 
-  logout(): void {
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
-  }
 
-  async manageAccount(): Promise<void> {
-    this.router.navigate(['/accountDetails']);
-  }
-
-  showPrivacyPolicy(): void {
-    this.router.navigate(['/privacy-policy']);
-  }
 
   toggleModal(): void {
     this.isModalVisible = !this.isModalVisible;
   }
 
   async loadVideos() {
-    const url = 'https://sefa-gur.developerakademie.org/videoflix/';
+    const url = `${environment.apiBaseUrl}/videoflix/`;
     const token = localStorage.getItem('token');
     if (!token) {
         this.router.navigate(['/login']);
@@ -84,14 +75,14 @@ export class VideoflixComponent implements OnInit {
     } catch (error) {
         console.error('Error loading videos:', error);
     }
-}
+  }
 
-async downloadImages(imageUrls:string) {
+  async downloadImages(imageUrls:string) {
     try {
         const imagesData = [];
         for (const imageUrl of imageUrls) {
             const imageName = imageUrl.split('/').pop();
-            const backendImageUrl = `https://sefa-gur.developerakademie.org/download-image/${imageName}/`;
+            const backendImageUrl = `${environment.apiBaseUrl}/download-image/${imageName}/`;
             const response = await axios.get(backendImageUrl, { responseType: 'json' });
             const imageData = response.data;
             imagesData.push({
@@ -106,11 +97,11 @@ async downloadImages(imageUrls:string) {
         console.error('Error downloading images:', error);
         return [];
     }
-}
+  }
 
 
   async getVideo(name: string) {
-    const url = `https://sefa-gur.developerakademie.org/videos/${name}/`;
+    const url = `${environment.apiBaseUrl}/videos/${name}/`;
     try {
       const response: any = await this.http.get(url).toPromise();
       console.log('Video response:', response);

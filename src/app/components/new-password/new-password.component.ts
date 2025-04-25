@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../enviroments/environment';
 
 @Component({
   selector: 'app-new-password',
@@ -13,32 +14,45 @@ import { CommonModule } from '@angular/common';
   styleUrl: './new-password.component.scss'
 })
 export class NewPasswordComponent {
-  constructor(private as:AuthService, private router: Router,private http: HttpClient) { }
-  
-  email="";
-  errorMessage="";
-  passwordResetSuccess:any
+  constructor(private as: AuthService, private router: Router, private http: HttpClient) {}
+
+  email: string = '';
+  errorMessage: string = '';
+  passwordResetSuccess: boolean = false;
+
+  loginSite(){
+    this.router.navigateByUrl('/login');
+  }
 
   emailSubmit() {
-    const url = 'https://sefa-gur.developerakademie.org/password-reset/';
+    const url = `${environment.apiBaseUrl}/password-reset/`; // backticks für string interpolation!
     const body = { email: this.email };
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     this.http.post(url, body, { headers }).subscribe(
       response => {
-        console.log('Password reset email sent:', response);
-        this.passwordResetSuccess = true; 
-        this.errorMessage = ''; 
+        console.log('✅ Passwort-Reset erfolgreich:', response);
+        this.passwordResetSuccess = true;
+        this.errorMessage = '';
       },
       error => {
-        console.error('Error during password reset request:', error);
-        this.errorMessage = 'Error during password reset request.';
-        this.passwordResetSuccess = false; 
+        console.error('❌ Fehler beim Passwort-Reset:', error);
+
+        this.passwordResetSuccess = false;
+
+        // 👇 Smartes Error-Handling
+        if (typeof error.error === 'string') {
+          this.errorMessage = error.error;
+        } else if (error.error?.error) {
+          this.errorMessage = error.error.error;
+        } else if (error.error?.message) {
+          this.errorMessage = error.error.message;
+        } else {
+          this.errorMessage = 'Es ist ein unbekannter Fehler aufgetreten.';
+        }
       }
     );
   }
-  
 }
+
+

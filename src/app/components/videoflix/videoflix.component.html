@@ -1,56 +1,49 @@
-<body>
-  <div class="container">
-    <header class="header">
-      <img class="logo" src="assets/9rrYlN-LogoMakr.png" alt="Netflix Logo" />
-      <div>
-        <input
-          placeholder="search"
-          class="input"
-          type="text"
-          [(ngModel)]="searchTerm"
-          (input)="filterImages(searchTerm)"
-        />
-      </div>
-      <button mat-icon-button color="accent" (click)="toggleModal()">
-        <mat-icon>menu</mat-icon>
+<body class="bg-dark text-white">
+  <div class="container-fluid min-vh-100 d-flex flex-column">
+    <!-- Header -->
+    <header class="d-flex justify-content-between align-items-center p-3 border-bottom">
+      <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
+        <i class="bi bi-list fs-4"></i>
       </button>
-      <div
-      id="header_modal"
-      class="visually-hidden"
-      [class.visually-hidden]="!isModalVisible"
-      >
-      <a routerLink="/videoflix" (click)="manageAccount()">Account</a>
-      <a routerLink="/videoflix" (click)="showPrivacyPolicy()"
-      >Privacy Policy</a
-      >
-      <a href="#" (click)="logout()">Log out</a>
-    </div>
-  </header>
-  <h2>Short Movies</h2>
-  <main class="main">
-      <div *ngFor="let imageData of filteredImagesData">
-        <div (click)="getVideo(imageData.name)" class="thumbnail">
-          <p class="opensans">{{ imageData.title }}</p>
-          <img class="imageSize" [src]="imageData.imageUrl" />
-          <p class="opensans">{{ imageData.description }}</p>
+      <input type="text" class="form-control w-50" placeholder="Search..." [(ngModel)]="searchTerm" (input)="filterImages(searchTerm)">
+      <img src="assets/logo.png" alt="Videoflix Logo" style="height: 60px;">
+    </header>
+
+
+
+<!-- Sidebar (Offcanvas) -->
+<app-sidebar></app-sidebar>
+
+
+    <!-- Titel -->
+    <h2 class="text-center my-4 display-5 fw-bold">🎬 Short Movies</h2>
+
+    <!-- Thumbnails -->
+    <main class="row g-4 justify-content-center">
+      <div *ngFor="let imageData of filteredImagesData" class="col-md-4 col-lg-3 ">
+        <div class="card bg-dark text-white border shadow-sm" (click)="getVideo(imageData.name)" style="cursor: pointer;">
+          <img [src]="imageData.imageUrl" class="card-img-top object-fit-cover" alt="Thumbnail">
+          <div class="card-body text-center ">
+            <h5 class="card-title">{{ imageData.title }}</h5>
+            <p class="card-text">{{ imageData.description }}</p>
+          </div>
         </div>
       </div>
     </main>
-  </div>
 
-  <div class="video-overlay" *ngIf="videoUrl" (click)="closeVideo($event)">
-    <div class="position" (click)="stopPropagation($event)">
-      <video #videoPlayer controls autoplay [src]="videoUrl"></video>
-    </div>
+    <!-- Video Overlay -->
+    <div class="video-overlay position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-90 d-flex flex-column align-items-center justify-content-center" *ngIf="videoUrl" (click)="closeVideo($event)">
+      <div class="position-relative w-75" (click)="stopPropagation($event)">
+        <video #videoPlayer class="w-100 rounded shadow" controls autoplay [src]="videoUrl"></video>
+      </div>
 
-    <div>
-      <button
-        class="resolutionButtons"
-        *ngFor="let resolution of resolutions"
-        (click)="changeResolution(resolution, $event)"
-      >
-        {{ resolution }}
-      </button>
+      <div class="mt-3 d-flex gap-3">
+        <button *ngFor="let resolution of resolutions"
+                (click)="changeResolution(resolution, $event)"
+                class="btn btn-outline-light">
+          {{ resolution }}
+        </button>
+      </div>
     </div>
   </div>
 </body>

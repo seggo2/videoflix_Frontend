@@ -2,11 +2,12 @@ import { Component, Renderer2, ElementRef ,OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -26,18 +27,20 @@ export class LoginComponent implements OnInit {
   
   async login() {
     try {
-      let resp: any = await this.as.loginWithUsernameAndPassword(this.username, this.password);
+      const resp: any = await this.as.loginWithUsernameAndPassword(this.username, this.password);
       console.log(resp);
       localStorage.setItem('token', resp.token);
       this.router.navigateByUrl('/videoflix');
+      this.errorMessage = ''; // Reset on success
     } catch (e: any) {
-       this.errorMessage = 'An error occurred during login.';
-      if (e.error.detail) {
-       this.errorMessage = e.error.detail
-      }
-      console.error(e);
+      console.error('❌ Login-Fehler:', e);
+      this.errorMessage =
+        e?.error?.error || // z.B. "username or password are incorrect"
+        e?.error?.message || // falls später geändert
+        'Ein unbekannter Fehler ist aufgetreten.';
     }
   }
+  
 
   newPassword(){
     this.router.navigateByUrl('/new-password');
@@ -45,5 +48,11 @@ export class LoginComponent implements OnInit {
   
   register(){
     this.router.navigateByUrl('/register');
+  }
+  
+  guestLogin() {
+    this.username = 'gast';
+    this.password = 'gast123';
+    this.login();
   }
 }

@@ -1,0 +1,13 @@
+<div class="offcanvas offcanvas-start bg-dark text-light" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasLabel">Menü</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+  
+    <div class="offcanvas-body d-flex flex-column gap-3">
+      <a style="cursor: pointer;" routerLink="/videoflix" (click)="showUpload()" class="text-light">Upload</a>
+      <a style="cursor: pointer;" routerLink="/videoflix" (click)="showPrivacyPolicy()" class="text-light">Privacy Policy</a>
+      <a href="#" (click)="logout()" class="text-danger">Log out</a>
+    </div>
+  </div>
+  

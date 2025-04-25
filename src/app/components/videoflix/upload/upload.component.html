@@ -1,0 +1,57 @@
+<body class="bg-dark text-white min-vh-100">
+    <div class="container py-5">
+      <h2 class="text-center mb-4">Video Upload</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+            
+            <!-- Video Selection -->
+            <div class="mb-3">
+              <label for="video" class="form-label">Select Video</label>
+              <input type="file" id="video" name="video" (change)="onFileSelected($event)" class="form-control" accept="video/mp4,video/x-m4v,video/*" required />
+            </div>
+
+         <!-- Loading / Progressbar -->
+          <div *ngIf="uploading" class="progress mt-3">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" [style.width]="uploadProgress + '%'" role="progressbar"></div>
+          </div>
+  
+            <!-- Video Title -->
+            <div class="mb-3">
+              <label for="title" class="form-label">Video Title</label>
+              <input type="text" id="title" [(ngModel)]="videoTitle" name="title" class="form-control" placeholder="Enter video title" required />
+            </div>
+  
+            <!-- Video Description -->
+            <div class="mb-3">
+              <label for="description" class="form-label">Video Description</label>
+              <textarea id="description" [(ngModel)]="videoDescription" name="description" class="form-control" placeholder="Enter video description" required></textarea>
+            </div>
+  
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-danger w-100 mb-3">Upload Video</button>
+          </form>
+  
+          <!-- Back to Videoflix Button -->
+          <div class="mt-3">
+            <a href="/videoflix" class="btn btn-secondary w-100">Back to Videoflix</a>
+          </div>
+
+          <div *ngIf="formError" class="alert alert-danger mt-3" role="alert">
+            {{ formError }}
+          </div>
+
+          <!-- Success Message -->
+          <div *ngIf="uploadSuccess" class="alert alert-success mt-3" role="alert">
+            Video uploaded successfully!
+          </div>
+  
+          <!-- Error Message -->
+          <div *ngIf="uploadError" class="alert alert-danger mt-3" role="alert">
+            There was an error uploading the video.
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  

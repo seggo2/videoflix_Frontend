@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../enviroments/environment';
 
 @Component({
   selector: 'app-reset-password-component',
@@ -16,6 +17,7 @@ export class ResetPasswordComponentComponent {
     this.uid = this.route.snapshot.paramMap.get('uid')!;
     this.token = this.route.snapshot.paramMap.get('token')!;
   }  
+  
   password="";
   passwordConfirm="";
   uid: string = '';
@@ -28,26 +30,30 @@ export class ResetPasswordComponentComponent {
 
   resetPassword() {
     if (this.password !== this.passwordConfirm) {
-      this.errorMessage = 'Passwords do not match!';
+      this.errorMessage = 'Die Passwörter stimmen nicht überein!';
       return;
     }
   
-    const url = 'https://sefa-gur.developerakademie.org/api/reset-password/';
+    const url = `${environment.apiBaseUrl}/api/reset-password/`; // ← backticks, kein String!
     const body = {
       uid: this.uid,
       token: this.token,
       new_password: this.password
     };
   
-    this.http.post(url, body).subscribe(response => {
-      console.log('Password has been reset', response);
-      this.passwordResetSuccess = true; 
-      this.errorMessage = ''; 
-      this.router.navigate(['/login']); // Weiterleitung an das Login, wenn das Passwort erfolgreich zurückgesetzt wurde
-    }, error => {
-      console.error('Error resetting password', error);
-      this.errorMessage = 'Error resetting password.'; 
-      this.passwordResetSuccess = false; 
+    this.http.post(url, body).subscribe({
+      next: response => {
+        console.log('✅ Passwort erfolgreich zurückgesetzt', response);
+        this.passwordResetSuccess = true;
+        this.errorMessage = '';
+        setTimeout(() => this.router.navigate(['/login']), 2000); // z.B. mit kleiner Verzögerung
+      },
+      error: error => {
+        console.error('❌ Fehler beim Zurücksetzen', error);
+        this.passwordResetSuccess = false;
+        this.errorMessage =
+          error.error?.error || error.error?.message || 'Ein unbekannter Fehler ist aufgetreten.';
+      }
     });
   }
   
