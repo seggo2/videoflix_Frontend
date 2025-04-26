@@ -21,7 +21,7 @@
     <!-- Thumbnails -->
     <main class="row g-4 justify-content-center">
       <div *ngFor="let imageData of filteredImagesData" class="col-md-4 col-lg-3 ">
-        <div class="card bg-dark text-white border shadow-sm" (click)="getVideo(imageData.name)" style="cursor: pointer;">
+        <div class="card bg-dark text-white border shadow-sm" (click)="playVideo(imageData.name)" style="cursor: pointer;">
           <img [src]="imageData.imageUrl" class="card-img-top object-fit-cover" alt="Thumbnail">
           <div class="card-body text-center ">
             <h5 class="card-title">{{ imageData.title }}</h5>

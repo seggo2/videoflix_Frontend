@@ -7,8 +7,9 @@
             
             <!-- Video Selection -->
             <div class="mb-3">
-              <label for="video" class="form-label">Select Video</label>
-              <input type="file" id="video" name="video" (change)="onFileSelected($event)" class="form-control" accept="video/mp4,video/x-m4v,video/*" required />
+              <label for="video" class="form-label">Select Video (nur .mp4)</label>
+              <input type="file" id="video" name="video" (change)="onFileSelected($event)" class="form-control" accept="video/mp4" required />
+              <div class="form-text text-light small">Nur MP4-Dateien sind erlaubt.</div>
             </div>
 
          <!-- Loading / Progressbar -->

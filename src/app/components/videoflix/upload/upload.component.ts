@@ -26,9 +26,19 @@ export class UploadComponent implements OnInit {
   ngOnInit(): void {}
 
   onFileSelected(event: any): void {
-    this.videoFile = event.target.files[0];
+    const selectedFile = event.target.files[0];
     this.resetStatus();
+  
+    if (selectedFile && selectedFile.type !== 'video/mp4') {
+      this.formError = 'Nur MP4-Dateien sind erlaubt. Bitte wählen Sie eine MP4-Datei aus.';
+      this.videoFile = null;
+      event.target.value = ''; // Eingabefeld wieder leeren
+      return;
+    }
+  
+    this.videoFile = selectedFile;
   }
+  
 
   onSubmit(): void {
     this.resetStatus();

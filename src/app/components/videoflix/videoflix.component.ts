@@ -28,8 +28,8 @@ export class VideoflixComponent implements OnInit {
   name = '';
   error = '';
   videos: any;
-  resolutions = ['1080p', '720p', '480p'];
-  selectedResolution = '1080p';
+  resolutions = [ '720p', '480p'];
+  selectedResolution = '480p';
   videoUrl: any;
   isFullscreen = false;
   videoUrls: any;
